@@ -20,35 +20,27 @@
 	        <div class="center sliding">ICPAK CHAT</div>
 	    </div>
 	</div>
-	  <div class="page-content messages-content">
-	    <div class="messages">
-	      <div class="messages-date">Sunday, Feb 9 <span>12:58</span></div>
-	      <div class="message message-sent">
-	        <div class="message-text">Hello</div>
-	      </div>
-	      <div class="message message-sent">
-	        <div class="message-text">How are you?</div>
-	      </div>
-	      <div class="message message-received">
-	        <div class="message-name">Kate</div>
-	        <div class="message-text">I am fine, thanks</div>
-	        <div style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)" class="message-avatar"></div>
-	      </div>
-	      <div class="messages-date">Sunday, Feb 3 <span>11:58</span></div>
-	      <div class="message message-sent">
-	        <div class="message-text">Nice photo?</div>
-	      </div>
-	      <div class="message message-sent message-pic">
-	        <div class="message-text"><img src="http://lorempixel.com/300/300/"></div>
-	        <div class="message-label">Delivered</div>
-	      </div>
-	      <div class="message message-received">
-	        <div class="message-name">Kate</div>
-	        <div class="message-text">Wow, awesome!</div>
-	        <div style="background-image:url(http://lorempixel.com/output/people-q-c-100-100-9.jpg)" class="message-avatar"></div>
-	      </div>
-	    </div>
-	  </div>
+    <!-- messagebar -->
+    <div class="toolbar messagebar">
+        <div class="toolbar-inner">
+        	<form method="POST" action="mobile/messages/message_profile" id="send-message">
+                <input type="hidden" id="receiver_id" name="receiver_id" />
+            	<div class="row">
+                    <div class="col-80">
+                        <textarea id="instant_message2" name="client_message_details" placeholder="Message" class=""></textarea>
+                    </div>
+                    <div class="col-20">
+                        <button class="button active" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="page-content messages-content">
+        <div class="messages" id="chat-history">
+          
+        </div>
+    </div>
   </div>
 
 </div>

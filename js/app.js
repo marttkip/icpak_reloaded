@@ -12,8 +12,7 @@ var Login_service = function() {
     this.findById = function(id) {
         return $.ajax({url: url + "/" + id});
     }
-
-   
+	
     this.login_member = function(form_data) {
 		var request = url + "login/login_member";
         return $.ajax({url: request, data: form_data, type: 'POST', processData: false,contentType: false});
@@ -138,40 +137,42 @@ $(document).on("submit","form#login_member",function(e)
         service.initialize().done(function () {
             console.log("Service initialized");
         });
-        myApp.showIndicator();
-         setTimeout(function () {
-            service.login_member(form_data).done(function (employees) {
+        service.login_member(form_data).done(function (employees) {
                 var data = jQuery.parseJSON(employees);
                 
                 if(data.message == "success")
                 {
-                    window.localStorage.setItem("member_no", data['result']['member_id']);
+                    window.localStorage.setItem("member_id", data['result']['member_id']);
+                    window.localStorage.setItem("member_no", data['result']['member_no']);
                     window.localStorage.setItem("logged_in", 'yes');
                     window.localStorage.setItem("member_email", data['result']['member_email']);
                     window.localStorage.setItem("member_first_name", data['result']['member_first_name']);
-                    window.localStorage.setItem("member_no", data['result']['member_id']);
                     window.localStorage.setItem("memberRefId", data['result']['memberRefId']);
                     window.localStorage.setItem("applicationRefId", data['result']['applicationRefId']);
                     window.localStorage.setItem("member_code", data['result']['member_code']);
-
+					
                     var member_first_name = window.localStorage.getItem('member_first_name');
 
-                    $( "#user_logged_in" ).html( '<h4>Welcome back '+member_first_name+'</h4>' );
                     myApp.alert('Welcome back '+member_first_name+' Press OK to proceed');
                     // location.reload()
-                    mainView.showNavbar();
+                    /*mainView.showNavbar();
                     mainView.router.loadPage('profile.html');
-                    mainView.showNavbar();
-                    
+                    mainView.showNavbar();*/
+					
+					myApp.showIndicator();
+					
+					var mainView = myApp.addView('.view-main');
+					mainView.router.back();
+					//mainView.router.refreshPage();
+					get_messages();
+					get_contacts();
                 }
                 else
                 {
                      window.localStorage.setItem("logged_in", 'no');
                      myApp.alert(''+data.result+' Press OK to proceed');
                 }
-                myApp.hideIndicator();
             });
-        }, 2000);
     }
     
     else
