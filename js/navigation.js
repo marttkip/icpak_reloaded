@@ -12,7 +12,7 @@ var $$ = Dom7;
 $(document).ready(function(e){
 	var mainView = myApp.addView('.view-main');
 	// mainView.showNavbar();
-	window.localStorage.clear();
+	// window.localStorage.clear();
 	
 	myApp.showIndicator();
 	setTimeout(function () {
