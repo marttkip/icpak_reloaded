@@ -384,3 +384,8 @@ ul.event-items .item-subtitle , ul.resources-items .item-subtitle
 .display_none{display: none !important;}
 .display_block{display: block !important;}
 
+.messages {padding-top: 50px;}
+
+#send-message {
+    width: 100%;
+}
