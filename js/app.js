@@ -202,6 +202,7 @@ $(document).on("submit","form#login_member",function(e)
                 {
                     window.localStorage.setItem("member_no", data['result']['member_id']);
                     // window.localStorage.setItem("member_no", data['result']['member_no']);
+                    window.localStorage.setItem("member_id", data['result']['member_id']);
                     window.localStorage.setItem("logged_in", 'yes');
                     window.localStorage.setItem("member_email", data['result']['member_email']);
                     window.localStorage.setItem("member_first_name", data['result']['member_first_name']);
