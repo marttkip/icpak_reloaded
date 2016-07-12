@@ -45,7 +45,7 @@
        
         <div class="toolbar tabbar tabbar-labels" id="bottom">
             <div class="toolbar-inner">
-                <a class="button active" href="index.html" id="events-button" onclick="get_event_items();">
+                <a class="button active" href="events.html" id="events-button">
                     <i class="fa fa-calendar">
                       <!-- <span class="badge bg-red">0</span> -->
                     </i>

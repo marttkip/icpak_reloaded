@@ -28,6 +28,10 @@ var StreamingService = function() {
 		var request = url + "streaming/get_recording_event" ;
         return $.ajax({url: request});
     }
+    this.get_single_recordings =  function(id) {
+		var request = url + "streaming/get_recording_detail/"+id ;
+        return $.ajax({url: request});
+    }
 
 }
 
@@ -37,7 +41,7 @@ function get_streaming_event()
 	service.initialize().done(function () {
 		console.log("Service initialized");
 	});
-
+	myApp.showIndicator();
 	service.get_recordings().done(function (employees) {
 		var data = jQuery.parseJSON(employees);
 		
@@ -49,7 +53,36 @@ function get_streaming_event()
 		
 		else
 		{
+			var streaming_now = window.localStorage.getItem('streaming_now');
 
+            $( "#streaming_now" ).html( streaming_now );
 		}
 	});
+	myApp.hideIndicator();   
+}
+
+function get_single_recording(id)
+{
+	var service = new StreamingService();
+	service.initialize().done(function () {
+		console.log("Service initialized");
+	});
+	myApp.showIndicator();
+	service.get_single_recordings(id).done(function (employees) {
+		var data = jQuery.parseJSON(employees);
+		
+		if(data.message == "success")
+		{
+			$( "#single_recording" ).html( data.result );
+			window.localStorage.setItem("single_recording",data.result);
+		}
+		
+		else
+		{
+			var single_recording = window.localStorage.getItem('single_recording');
+
+            $( "#single_recording" ).html( single_recording );
+		}
+	});
+	myApp.hideIndicator();   
 }

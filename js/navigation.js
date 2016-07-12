@@ -36,7 +36,7 @@ $(document).ready(function(e){
 
 			mainView.router.loadPage('events.html');
 		}
-	 }, 2000);
+	 }, 3000);
 	
 });
 $$(document).on('pageInit', '.page[data-page="login"]', function (e) 
@@ -121,6 +121,7 @@ $$(document).on('pageInit', '.page[data-page="member-profile"]', function (e)
 		$( "#profile-button" ).addClass( "active");
 
 		myApp.closePanel();
+		
 		get_profile_details();
 	}
 	else
