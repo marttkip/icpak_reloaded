@@ -71,30 +71,43 @@ document.addEventListener("deviceready", onDeviceReady, false);
 function onDeviceReady() 
 {
     
-    cordova.plugins.backgroundMode.setDefaults({ title:'ICPAK LIVE', text:'ICPAK LIVE', silent: true});
+    // cordova.plugins.backgroundMode.setDefaults({ title:'ICPAK LIVE', text:'ICPAK LIVE', silent: true});
     
-    //check if background action is enabled
-    var enabled = cordova.plugins.backgroundMode.isEnabled();
-    if(enabled === false)
-    {
-        // Enable background mode
-        cordova.plugins.backgroundMode.enable();
-    }
+    // //check if background action is enabled
+    // var enabled = cordova.plugins.backgroundMode.isEnabled();
+    // if(enabled === false)
+    // {
+    //     // Enable background mode
+    //     cordova.plugins.backgroundMode.enable();
+    // }
 
-    // Called when background mode has been activated
-    cordova.plugins.backgroundMode.onactivate = function () {
+    // // Called when background mode has been activated
+    // cordova.plugins.backgroundMode.onactivate = function () {
         
-        //clear other timeouts
-        //clearTimeout(all_message_timeout);
-        //clearTimeout(single_message_timeout);
+    //     //clear other timeouts
+    //     //clearTimeout(all_message_timeout);
+    //     //clearTimeout(single_message_timeout);
         
-    };
+    // };
     
-    cordova.plugins.backgroundMode.onfailure = function(errorCode) {
-        cordova.plugins.backgroundMode.configure({
-                        text:errorCode
-                    });        
-    };
+    // cordova.plugins.backgroundMode.onfailure = function(errorCode) {
+    //     cordova.plugins.backgroundMode.configure({
+    //                     text:errorCode
+    //                 });        
+    // };
+
+    document.addEventListener("backbutton", onBackKeyDown, false);
+}
+function onBackKeyDown() {
+    // Handle the back button
+    var mainView = myApp.addView('.view-main');
+    mainView.router.back();
+    mainView.router.refreshPage();
+}
+
+function onMenuKeyDown() {
+    // Handle the back button
+    alert('menu button');
 }
 
 $(document).ready(function(){
@@ -117,7 +130,52 @@ $(document).ready(function(){
     
     // automatic_login();
 });
+$(document).on("submit","form#edit_member",function(e)
+{
+    e.preventDefault();
+    $("#edit_contact_response").html('').fadeIn( "slow");
+    $("#loader-wrapper" ).removeClass( "display_none" );
+    
+    //get form values
+    var form_data = new FormData(this);
 
+    //check if there is a network connection
+    var connection = true;//is_connected();
+     myApp.showIndicator();
+    if(connection === true)
+    {
+        var service = new Login_service();
+        service.initialize().done(function () {
+            console.log("Service initialized");
+        });
+        
+        //get form values
+        service.edit_member_contact(form_data).done(function (employees) {
+            var data = jQuery.parseJSON(employees);
+            
+            if(data.message == "success")
+            {
+                myApp.alert('You have successfully made a change to your profile','Successful');
+                //   var mainView = myApp.addView('.view-main');
+                // mainView.router.loadPage('profile.html');
+            }
+            else
+            {
+                myApp.alert(''+data.result+'','Ooops');
+                $("#edit_contact_response").html('<div class="alert alert-danger center-align">'+data.result+'</div>').fadeIn( "slow");
+            }
+            
+        });
+    }
+    
+    else
+    {
+        
+    }
+
+    myApp.hideIndicator();
+    return false;
+});
 
 //Login member
 $(document).on("submit","form#login_member",function(e)
@@ -142,8 +200,9 @@ $(document).on("submit","form#login_member",function(e)
                 
                 if(data.message == "success")
                 {
+                    window.localStorage.setItem("member_no", data['result']['member_id']);
+                    // window.localStorage.setItem("member_no", data['result']['member_no']);
                     window.localStorage.setItem("member_id", data['result']['member_id']);
-                    window.localStorage.setItem("member_no", data['result']['member_no']);
                     window.localStorage.setItem("logged_in", 'yes');
                     window.localStorage.setItem("member_email", data['result']['member_email']);
                     window.localStorage.setItem("member_first_name", data['result']['member_first_name']);
@@ -195,35 +254,38 @@ function get_profile_details()
     var memberRefId1 = window.localStorage.getItem('memberRefId');
     var member_no = window.localStorage.getItem('member_no');
 
-    var profile_details = window.localStorage.getItem('profile_details');
+    // var profile_details = window.localStorage.getItem('profile_details');
 
     // please show if there is somethis to show
     myApp.showIndicator();
-        setTimeout(function () {
 
-        service.getProfileDetails(applicationRefId1,memberRefId1,member_no).done(function (employees) {
-            var data = jQuery.parseJSON(employees);
-            
-            if(data.message == "success")
-            {
-                window.localStorage.setItem("my_profile",data.result);
-                window.localStorage.setItem("cpd_hours",data.cpd_hours);
-                window.localStorage.setItem("cpd_questions",data.cpd_questions);
-
-                $( "#my_profile" ).html( data.result );
-                $( "#cpd_hours" ).html( data.cpd_hours );
-                $( "#cpd_questions" ).html( data.cpd_questions );
-            }
-         
-        });
-        myApp.hideIndicator();
-    }, 2000);
+    service.getProfileDetails(applicationRefId1,memberRefId1,member_no).done(function (employees) {
+        var data = jQuery.parseJSON(employees);
         
-    var my_profile = window.localStorage.getItem('my_profile');
-    var cpd_hours = window.localStorage.getItem('cpd_hours');
-    var cpd_questions = window.localStorage.getItem('cpd_questions');
+        if(data.message == "success")
+        {
+            $( "#my_profile" ).html( data.result );
+            $( "#cpd_hours" ).html( data.cpd_hours );
+            $( "#cpd_questions" ).html( data.cpd_questions );
 
-    $( "#my_profile" ).html( my_profile );
-    $( "#cpd_hours" ).html( cpd_hours );
-    $( "#cpd_questions" ).html( cpd_questions );
+            window.localStorage.setItem("my_profile",data.result);
+            window.localStorage.setItem("cpd_hours",data.cpd_hours);
+            window.localStorage.setItem("cpd_questions",data.cpd_questions);
+        }
+        else
+        {
+            var my_profile = window.localStorage.getItem('my_profile');
+            var cpd_hours = window.localStorage.getItem('cpd_hours');
+            var cpd_questions = window.localStorage.getItem('cpd_questions');
+
+            $( "#my_profile" ).html( my_profile );
+            $( "#cpd_hours" ).html( cpd_hours );
+            $( "#cpd_questions" ).html( cpd_questions );
+        }
+     
+    });
+    myApp.hideIndicator();   
+    
 }
+//Login member
+
