@@ -98,6 +98,9 @@ function onDeviceReady()
 
     document.addEventListener("backbutton", onBackKeyDown, false);
 }
+
+document.addEventListener("backbutton", onBackKeyDown, false);
+
 function onBackKeyDown() {
     // Handle the back button
     var mainView = myApp.addView('.view-main');

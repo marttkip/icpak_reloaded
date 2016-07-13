@@ -425,3 +425,37 @@ ul.event-items .item-subtitle , ul.resources-items .item-subtitle
 #send-message {
     width: 100%;
 }
+
+.floating-button.bg-pink, .floating-button.color-pink, .floating-button.theme-pink, .speed-dial-buttons a.bg-pink, .speed-dial-buttons a.color-pink, .speed-dial-buttons a.theme-pink, .theme-pink .floating-button, .theme-pink .speed-dial-buttons a {
+    background: #c29d07 none repeat scroll 0 0;
+    color: #000;
+}
+.list-block .item-link.color-pink, .list-block .item-link.list-button.color-pink, .tabbar a.active.color-pink, a.color-pink {
+    color: #e91e63;
+}
+.actions-modal-button, .button, .floating-button > a, .label-checkbox, .label-radio, .modal-button, .ripple, .speed-dial-buttons a, .tab-link, a.floating-button, a.item-link, a.link {
+}
+.color-pink {
+    color: #e91e63;
+}
+.floating-button {
+    align-items: center;
+    background-color: #2196f3;
+    border-radius: 50%;
+    /*bottom: 16px;*/
+    bottom: 60px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    color: #fff;
+    display: flex;
+    height: 56px;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    right: 16px;
+    transition-duration: 0.3s;
+    width: 56px;
+    z-index: 1500;
+}
+.searchbar {
+  margin-top: 6px !important;
+}
