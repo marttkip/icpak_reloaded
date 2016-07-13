@@ -58,6 +58,46 @@ $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e)
 	//alert(logged_in);
 	if(logged_in == 'yes')
 	{
+		var member_id = window.localStorage.getItem("member_id");
+		$("#chat_member_id").val(member_id);
+		
+		var web_service = new Login_service();
+		web_service.initialize().done(function () {
+			console.log("Service initialized");
+		});
+			
+		var forum_list = window.localStorage.getItem("forum_list");
+		//forum_list = null;
+		
+		if((forum_list == "") || (forum_list == null) || (forum_list == "null"))
+		{
+			web_service.get_forum_items().done(function (employees)
+			{
+				var data = jQuery.parseJSON(employees);
+				
+				if(data.message == "success")
+				{
+					$( "#all_forums" ).html( data.result );
+					window.localStorage.setItem("forum_list", data.result);
+					window.localStorage.setItem("total_forum", data.total_received);
+				}
+				
+				else
+				{
+					myApp.hideIndicator();
+					myApp.alert(data.result, 'Error');
+				}
+			});
+		}
+		
+		else
+		{
+			$( "#all_forums" ).html( forum_list );
+		}
+		
+		refresh_ads_selection = setInterval(function(){ refresh_forum_timer() }, 20000);
+		refresh_ads_display = setInterval(function(){ refresh_forum_display() }, 30000);
+		
 		get_messages();
 		get_contacts();
 	}

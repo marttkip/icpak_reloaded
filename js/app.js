@@ -59,7 +59,26 @@ var Login_service = function() {
 		var request = url + "events/book_non_member_to_event";
         return $.ajax({url: request, data: form_data, type: 'POST', processData: false,contentType: false});
     }
+	this.get_forum_items = function()
+	{
+		var request = url + "forum/get_blog_items" ;
+		return $.ajax({url: request});
+	}
 
+    this.getBlogDetail = function(id, member_id) {
+		var request = url + "forum/get_forum_comments" ;
+        return $.ajax({url: url + "forum/get_forum_comments/" + id + "/" + member_id});
+    }
+	
+    this.add_discussion = function(form_data) {
+		var request = url + "forum/add_discussion";
+        return $.ajax({url: request, data: form_data, type: 'POST', processData: false,contentType: false});
+    }
+	
+    this.add_comment = function(comment, post_id, member_id) {
+		var request = url + "forum/add_comment" ;
+        return $.ajax({url: request, data: {comment :comment, post_id: post_id, member_id: member_id}, type: 'POST'});
+    }
 }
 
 
@@ -287,5 +306,235 @@ function get_profile_details()
     myApp.hideIndicator();   
     
 }
-//Login member
 
+$(document).on("submit","form#add_discussion",function(e)
+{
+    e.preventDefault();
+    //get form values
+    var form_data = new FormData(this);
+
+    //check if there is a network connection
+    var connection = true;//is_connected();
+     myApp.showIndicator();
+    if(connection === true)
+    {
+        var service = new Login_service();
+        service.initialize().done(function () {
+            console.log("Service initialized");
+        });
+        
+        //get form values
+        service.add_discussion(form_data).done(function (employees) {
+            var data = jQuery.parseJSON(employees);
+            
+            if(data.message == "success")
+            {
+				myApp.hideIndicator();
+				$("#discussion_title").val('');
+				$("#discussion_content").val('');
+				refresh_forum_timer();
+				refresh_forum_display();
+            }
+            else
+            {
+                myApp.alert(''+data.result+'','Ooops');
+            }
+            
+        });
+    }
+    
+    else
+    {
+        
+    }
+
+    myApp.hideIndicator();
+    return false;
+});
+
+function refresh_forum_timer()
+{
+	var service = new Login_service();
+	service.initialize().done(function () {});
+	
+	service.get_forum_items().done(function (employees) {
+		var data = jQuery.parseJSON(employees);
+		
+		if(data.message == "success")
+		{
+			var total_forum = window.localStorage.getItem("total_forum");
+			var new_forum = data.total_received;
+			window.localStorage.setItem("new_forum", new_forum);
+			
+			if(total_forum != data.total_received)
+			{
+				window.localStorage.setItem("forum_list", data.result);
+			}
+		}
+	});
+}
+
+function refresh_forum_display()
+{
+	var total_forum = window.localStorage.getItem("total_forum");
+	var new_forum = window.localStorage.getItem("new_forum");
+	var forum_list = window.localStorage.getItem("forum_list");
+	
+	if(forum_list == " ")
+	{
+		new_forum = total_forum;
+		window.localStorage.setItem("total_forum", new_forum);
+	}
+	
+	//case of new adds
+	if(new_forum != total_forum)
+	{
+		window.localStorage.setItem("total_forum", new_forum);
+		$( "#all_forums" ).html( forum_list );
+	}
+}
+
+function get_blog_description(id)
+{
+	myApp.showIndicator();
+	
+	//get event details
+	var blog_details = window.localStorage.getItem("blog_details"+id);
+	var blog_details = null;
+	
+	if((blog_details == "") || (blog_details == null) || (blog_details == "null"))
+	{
+		var service = new Login_service();
+		service.initialize().done(function () {
+			console.log("Service initialized");
+		});
+		var member_id = window.localStorage.getItem("member_id");
+		
+		service.getBlogDetail(id, member_id).done(function (employees) {
+			var data = jQuery.parseJSON(employees);
+			//alert('here');
+			if(data.message == "success")
+			{//alert(data.result);
+				window.localStorage.setItem("blog_details"+id, data.result);
+				window.localStorage.setItem("blog_title"+id, data.discussion_title);
+				window.localStorage.setItem("blog_content"+id, data.discussion_content);
+				window.localStorage.setItem("forum_post_id", id);
+				$( "#blog_details" ).html( data.result );
+				$( "h3#forum-title" ).html( data.discussion_title );
+				myApp.hideIndicator();
+			}
+			
+			else
+			{
+				myApp.alert('Oops. Unable to get content', 'ICPAK');
+				myApp.hideIndicator();
+			}
+		});
+	}
+	
+	else
+	{
+		setTimeout(function () {
+			// change the page to home 
+			var blog_title = window.localStorage.getItem("blog_title"+id);
+			window.localStorage.setItem("post_id", id);
+			$( "#blog_details" ).html( blog_details );
+			$( "#forum-title" ).html( blog_title );
+			myApp.hideIndicator();
+		 }, 3000);
+	}
+	
+	var refresh_blog_selection2 = setInterval(function(){ refresh_blog_timer(id) }, 2000);
+	var refresh_blog_display2 = setInterval(function(){ refresh_blog_display(id) }, 4000);
+}
+
+function refresh_blog_timer(id)
+{
+	var service = new Login_service();
+	service.initialize().done(function () {
+		console.log("Service initialized");
+	});
+	var member_id = window.localStorage.getItem("member_id");
+	
+	service.getBlogDetail(id, member_id).done(function (employees) {
+		var data = jQuery.parseJSON(employees);
+		
+		if(data.message == "success")
+		{
+			var total_blog = window.localStorage.getItem("total_blog"+id);
+			var new_blog = data.total_received;
+			window.localStorage.setItem("new_blog"+id, new_blog);
+			
+			if(total_blog != data.total_received)
+			{
+				window.localStorage.setItem("blog_list"+id, data.result);
+			}
+		}
+	});
+}
+
+function refresh_blog_display(id)
+{
+	var total_blog = window.localStorage.getItem("total_blog"+id);
+	var new_blog = window.localStorage.getItem("new_blog"+id);
+	
+	//case of new adds
+	if(new_blog != total_blog)
+	{
+		window.localStorage.setItem("total_blog"+id, new_blog);
+		var blog_list = window.localStorage.getItem("blog_list"+id);
+		$( "#blog_details" ).html( blog_list );
+	}
+}
+
+$(document).on("click","a.add-comment",function()
+{
+	myApp.showIndicator();
+	
+	//check if there is a network connection
+	var connection = true;//is_connected();
+	
+	if(connection === true)
+	{
+		var service = new Login_service();
+		service.initialize().done(function () {
+			console.log("Service initialized");
+		});
+		
+		var member_id = window.localStorage.getItem("member_id");
+		var comment = $("#post_comment").val();
+		var post_id = window.localStorage.getItem("forum_post_id");
+		service.add_comment(comment, post_id, member_id).done(function (employees) {
+			var data = jQuery.parseJSON(employees);
+			
+			if(data.message == "success")
+			{
+				myApp.hideIndicator();
+				$("#post_comment").val('');
+				get_blog_description(post_id);
+			}
+			else
+			{
+				myApp.hideIndicator();
+				myApp.alert(data.result, 'Error');
+			}
+        });
+	}
+	
+	else
+	{
+		myApp.alert('No internet connection - please check your internet connection then try again', 'ICPAK');
+		myApp.hideIndicator();
+	}
+	return false;
+});
+$(document).on("click","a.post-notification",function(e)
+{
+	var post_id = window.localStorage.getItem("forum_post_id");
+	var blog_title = window.localStorage.getItem("blog_title"+post_id);
+	var blog_content = window.localStorage.getItem("blog_content"+post_id);
+	myApp.addNotification({
+		title: blog_title,
+		message: blog_content
+	});	
+});

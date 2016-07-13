@@ -13,6 +13,9 @@
 		<div class="page-content">
 			<div class="toolbar tabbar tabbar-labels">
 			    <div class="toolbar-inner" id="top-bar">
+			        <a href="#tab7" class="tab-link">
+			             <span class="tabbar-label">DISCUSSIONS</span>
+			        </a>
 			        <a href="#tab5" class="tab-link active">
 			            <!-- <i class="fa fa-video-camera"></i> -->
 			            <span class="tabbar-label">CHATS
@@ -45,6 +48,29 @@
 				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
 				    <div class="list-block list-block-search searchbar-found media-list">
 					  <ul class="event-items" id="inbox">
+                        
+					  </ul>
+					</div>
+		        </div>
+		        <!-- Tab 1, active by default -->
+		        <div id="tab7" class="page-content tab">
+                	<a href="#" data-popup=".popup-add-discussion" class="open-popup button active"><i class="fa fa-plus"></i> New Discussion</a>
+		        	<!-- Scrollable page content-->
+				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+				    <div class="searchbar-input">
+				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+				    </div><a href="#" class="searchbar-cancel">Cancel</a>
+				  </form>
+				 
+				  <!-- Search Bar overlay -->
+				  <div class="searchbar-overlay"></div>
+				  	<!-- This block will be displayed if nothing found -->
+				    <div class="content-block searchbar-not-found">
+				      <div class="content-block-inner">Nothing found</div>
+				    </div>	 
+				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+				    <div class="list-block list-block-search searchbar-found media-list">
+					  <ul class="event-items" id="all_forums">
                         
 					  </ul>
 					</div>

@@ -6,11 +6,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <title>ICPAK APP</title>
-    
     <!-- Path to Framework7 Library CSS-->
     <link rel="stylesheet" href="dist/css/framework7.ios.min.css">
-    <link rel="stylesheet" href="css/fontawesome/css/font-awesome.css"> <!-- style CSS -->  
-    
+    <link rel="stylesheet" href="css/fontawesome/css/font-awesome.css"> <!-- style CSS -->
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="css/my-app.css">
     <script type="text/javascript" src="js/connection.js"></script>
@@ -140,7 +138,48 @@
         </div>
     </div>
     
+    <!-- Discussion Popup -->
+  <div class="popup popup-add-discussion">
+    <div class="content-block">
+      <h3>New Discussion</h3>
+      <p><a href="#" class="close-popup"><i class="fa fa-times"></i> Close</a></p>
+      
+        <form id="add_discussion" method="post" action="#">
+        	<input type="hidden" id="chat_member_id" value=""/>
+            <div class="list-block">
+                <ul>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Title</div>
+                            <div class="item-input">
+                            	<input type="text" name="discussion_title" id="discussion_title" placeholder="Discussion Title">
+                            </div>
+                        </div>
+                    </li>
+                    <li class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">Content</div>
+                            <div class="item-input">
+                            	<textarea name="discussion_content" id="discussion_content" placeholder="Content"></textarea>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="list-block">
+                <ul>
+                    <li><input type="submit" class="button active" value="Add Discussion"/></li>
+                </ul>
+                <div class="list-block-label">
+                    <p><a href="#" class="close-login-screen"><i class="fa fa-times"></i> Close</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+    
     <!-- Path to your app js-->
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/my-app.js"></script>
   </body>
 </html>
