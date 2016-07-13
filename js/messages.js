@@ -52,14 +52,72 @@ var MessagesService = function() {
 
 $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e) 
 {
+	window.localStorage.setItem("view_page",1);
+	var mainView = myApp.addView('.view-main');
+	mainView.showNavbar();
+
+	$( "#black-login" ).addClass( "cached" );
+	$( "#resources-button" ).removeClass( "active" );
+	$( "#events-button" ).removeClass( "active" );
+	$( "#live-button" ).removeClass( "active" );
+	$( "#chat-button" ).addClass( "active" );
+	$( "#profile-button" ).removeClass( "active");
+
+	var member_id = window.localStorage.getItem("member_id");
+	$("#chat_member_id").val(member_id);
+	var member_name =  window.localStorage.getItem("member_first_name");
+	$( "#chat_member_name" ).val( member_name );
+
+	myApp.closePanel();
+
 	myApp.showIndicator();
 	//window.localStorage.setItem("logged_in", 'no');
 	var logged_in = window.localStorage.getItem("logged_in");
 	//alert(logged_in);
 	if(logged_in == 'yes')
 	{
-		get_messages();
-		get_contacts();
+		var member_id = window.localStorage.getItem("member_id");
+		$("#chat_member_id").val(member_id);
+		
+		var web_service = new Login_service();
+		web_service.initialize().done(function () {
+			console.log("Service initialized");
+		});
+			
+		var forum_list = window.localStorage.getItem("forum_list");
+		//forum_list = null;
+		
+		if((forum_list == "") || (forum_list == null) || (forum_list == "null"))
+		{
+			web_service.get_forum_items().done(function (employees)
+			{
+				var data = jQuery.parseJSON(employees);
+				
+				if(data.message == "success")
+				{
+					$( "#all_forums" ).html( data.result );
+					window.localStorage.setItem("forum_list", data.result);
+					window.localStorage.setItem("total_forum", data.total_received);
+				}
+				
+				else
+				{
+				
+					myApp.alert(data.result, 'Error');
+				}
+			});
+		}
+		
+		else
+		{
+			$( "#all_forums" ).html( forum_list );
+		}
+		
+		refresh_ads_selection = setInterval(function(){ refresh_forum_timer() }, 20000);
+		refresh_ads_display = setInterval(function(){ refresh_forum_display() }, 30000);
+		
+		// get_messages();
+		// get_contacts();
 	}
 	
 	else
@@ -67,10 +125,14 @@ $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e)
 		var mainView = myApp.addView('.view-main');
 		mainView.router.loadPage('login.html');
 	}
+	myApp.hideIndicator();
 })
 
 $(document).on('pageInit', '.page[data-page="login"]', function (e) 
 {
+	var view_page =  window.localStorage.getItem("view_page");
+	$( "#view_page" ).val( view_page );
+	
 	myApp.hideIndicator();
 })
 

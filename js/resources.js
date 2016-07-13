@@ -100,7 +100,7 @@ function get_publication_items()
 	service.initialize().done(function () {
 		console.log("Service initialized");
 	});
-	
+	myApp.showIndicator();
 	service.getallLatestpublications().done(function (employees) {
 		var data = jQuery.parseJSON(employees);
 		
@@ -115,6 +115,7 @@ function get_publication_items()
 
 		}
 	});
+	myApp.hideIndicator();
 }
 
 function get_publication_detail(id)
@@ -123,7 +124,7 @@ function get_publication_detail(id)
 	service.initialize().done(function () {
 		console.log("Service initialized");
 	});
-
+	myApp.showIndicator();
 	service.getpublicationDetail(id).done(function (employees) {
 		var data = jQuery.parseJSON(employees);
 		
@@ -139,6 +140,7 @@ function get_publication_detail(id)
 
 		}
 	});
+	myApp.hideIndicator();
 }
 $(document).on("click","a.download-resource",function(e)
 {

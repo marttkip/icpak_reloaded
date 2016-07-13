@@ -49,52 +49,29 @@ var EmployeeService = function() {
 
 function get_event_items()
 {
+	var service = new EmployeeService();
+	service.initialize().done(function () {
+		console.log("Service initialized");
+	});
 
-	var isOffline = 'onLine' in navigator && !navigator.onLine;
+	//get client's credentials
+	myApp.showIndicator();
+	service.findByName().done(function (employees) {
+		var data = jQuery.parseJSON(employees);
+		alert(data.message);
+		if(data.message == "success")
+		{
 
-	if ( isOffline ) {
-	//local db
+			$( "#event_list" ).html( data.result );
+			window.localStorage.setItem("events_list",data.result);
+		}
 		
-	    myApp.addNotification({
-	        message: 'No internet connection - please check your internet connection',
-	        button: {
-	            text: 'Close',
-	            color: 'yellow'
-	        }
-	    });
-		var events_list = window.localStorage.getItem("events_list");
-		$( "#events_list" ).html(events_list);
-	}
-	else {
-	// internet data
-	 	$( "#loader-wrapper" ).removeClass( "display_none" );
-		var service = new EmployeeService();
-		service.initialize().done(function () {
-			console.log("Service initialized");
-		});
-
-		//get client's credentials
-
-		service.findByName().done(function (employees) {
-			var data = jQuery.parseJSON(employees);
+		else
+		{
 			
-			if(data.message == "success")
-			{
-				// $( "#news-of-icpak" ).addClass( "display_block" );
-				// window.localStorage.setItem("events_list",'');
-
-				$( "#events_list" ).html( data.result );
-				window.localStorage.setItem("events_list",data.result);
-				$( "#loader-wrapper" ).addClass( "display_none" );
-			}
-			
-			else
-			{
-
-			}
-		});
-	}
-	
+		}
+	});
+	myApp.hideIndicator();  
 }
 
 //get a logged in user's details

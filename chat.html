@@ -10,76 +10,32 @@
 		        <div class="right"></div>
 		    </div>
 		</div>
-
+		<form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+		    <div class="searchbar-input">
+		      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+		    </div><a href="#" class="searchbar-cancel">Cancel</a>
+		</form>
 		<div class="page-content">
-			<div class="toolbar tabbar tabbar-labels">
-			    <div class="toolbar-inner" id="top-bar">
-			        <a href="#tab5" class="tab-link active">
-			            <!-- <i class="fa fa-video-camera"></i> -->
-			            <span class="tabbar-label">CHATS
-			            	<!--<span class="badge bg-red">5</span>-->
-			            </span>
-			        </a>
-			        <a href="#tab6" class="tab-link">
-			             <span class="tabbar-label">CONTACTS</span>
-			        </a>
-			    </div>
+			
+			
+			 
+			
+			    	  <!-- Search Bar overlay -->
+				 	 <div class="searchbar-overlay"></div>
+				  	<!-- This block will be displayed if nothing found -->
+				    <div class="content-block searchbar-not-found">
+				      <div class="content-block-inner">Nothing found</div>
+				    </div>	 
+			    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+			    <div class="list-block list-block-search searchbar-found media-list">
+				  <ul class="event-items" id="all_forums" style="margin-bottom:50px;">
+	                
+				  </ul>
+				</div>
 			</div>
-			<div class="tabs-swipeable-wrap">
-		      <!-- Tabs, tabs wrapper -->
-		      <div class="tabs">
-		        <!-- Tab 1, active by default -->
-		        <div id="tab5" class="page-content tab active">
-		        	<!-- Scrollable page content-->
-				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-				    <div class="searchbar-input">
-				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
-				    </div><a href="#" class="searchbar-cancel">Cancel</a>
-				  </form>
-				 
-				  <!-- Search Bar overlay -->
-				  <div class="searchbar-overlay"></div>
-				  	<!-- This block will be displayed if nothing found -->
-				    <div class="content-block searchbar-not-found">
-				      <div class="content-block-inner">Nothing found</div>
-				    </div>	 
-				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-				    <div class="list-block list-block-search searchbar-found media-list">
-					  <ul class="event-items" id="inbox">
-                        
-					  </ul>
-					</div>
-					
-		        </div>
-		        <!-- Tab 2 -->
-		        <div id="tab6" class="page-content tab">
-		          		<!-- Scrollable page content-->
-				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-				    <div class="searchbar-input">
-				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
-				    </div><a href="#" class="searchbar-cancel">Cancel</a>
-				  </form>
-				 
-				  <!-- Search Bar overlay -->
-				  <div class="searchbar-overlay"></div>
-				  	<!-- This block will be displayed if nothing found -->
-				    <div class="content-block searchbar-not-found">
-				      <div class="content-block-inner">Nothing found</div>
-				    </div>	 
-				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-				    <div class="list-block list-block-search searchbar-found media-list">
-					  <ul class="event-items" id="contacts">
-					    
-					  </ul>
-					</div>
-		        </div>
-		        <!-- Tab 3 -->
-		      </div>
-		    </div>
-		</div>
-		  <a href="#" class="floating-button color-pink">
-					    <i class="fa fa-plus"></i>
-					  </a>
+		  <a href="#" class="floating-button color-pink open-popup button active" data-popup=".popup-add-discussion" >
+		    <i class="fa fa-plus"></i>
+		  </a>
 		<!-- end of page content -->
 		<div class="toolbar tabbar tabbar-labels" id="bottom">
             <div class="toolbar-inner">

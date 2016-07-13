@@ -13,7 +13,7 @@ $(document).ready(function(e){
 	var mainView = myApp.addView('.view-main');
 	// mainView.showNavbar();
 	// window.localStorage.clear();
-	
+
 	myApp.showIndicator();
 	setTimeout(function () {
 		myApp.hideIndicator();
@@ -62,6 +62,7 @@ $$(document).on('pageInit', '.page[data-page="icpak-resources"]', function (e)
 
 $$(document).on('pageInit', '.page[data-page="icpak-events"]', function (e) 
 {
+	// alert("sdbajshdajhs");
 	var mainView = myApp.addView('.view-main');
 	mainView.showNavbar();
 	$( "#black-login" ).addClass( "cached" );
@@ -74,19 +75,6 @@ $$(document).on('pageInit', '.page[data-page="icpak-events"]', function (e)
 	myApp.closePanel();
 
 	get_event_items();
-})
-$$(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e) 
-{
-	var mainView = myApp.addView('.view-main');
-	mainView.showNavbar();
-
-	$( "#black-login" ).addClass( "cached" );
-	$( "#resources-button" ).removeClass( "active" );
-	$( "#events-button" ).removeClass( "active" );
-	$( "#live-button" ).removeClass( "active" );
-	$( "#chat-button" ).addClass( "active" );
-	$( "#profile-button" ).removeClass( "active");
-	myApp.closePanel();
 })
 
 $$(document).on('pageInit', '.page[data-page="icpak-live"]', function (e) 
@@ -106,7 +94,7 @@ $$(document).on('pageInit', '.page[data-page="icpak-live"]', function (e)
 
 $$(document).on('pageInit', '.page[data-page="member-profile"]', function (e) 
 {
-
+	window.localStorage.setItem("view_page",2);
 	var mainView = myApp.addView('.view-main');
 	mainView.showNavbar();
 	var member_no = window.localStorage.getItem("member_no");

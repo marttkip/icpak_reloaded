@@ -1,29 +1,30 @@
 
 <div class="pages ">
-	
-	<div id="resources-page" data-page="icpak-resources" class="page navbar-fixed" >
+	<div data-page="icpak-chat" class="page navbar-fixed toolbar-fixed" id="events-single-page">
 		<div class="navbar">
 		    <div class="navbar-inner">
 		    	<div class="left">
 		            <a href="#" class="link icon-only open-panel"> <i class="fa fa-bars"></i></a>
 		        </div>
-		        <div class="center sliding">PUBLICATIONS</div>
+		        <div class="center sliding">ICPAK CHAT</div>
+		        <div class="right"></div>
 		    </div>
-		   
 		</div>
+
 		<div class="page-content">
 			<div class="toolbar tabbar tabbar-labels">
 			    <div class="toolbar-inner" id="top-bar">
-			        <a href="#tab1" class="tab-link active">
+			        <a href="#tab7" class="tab-link">
+			             <span class="tabbar-label">DISCUSSIONS</span>
+			        </a>
+			        <a href="#tab5" class="tab-link active">
 			            <!-- <i class="fa fa-video-camera"></i> -->
-			            <span class="tabbar-label"> JOURNALS
-			            	<i class="fa fa-book"></i>
+			            <span class="tabbar-label">CHATS
+			            	<!--<span class="badge bg-red">5</span>-->
 			            </span>
 			        </a>
-			        <a href="#tab2" class="tab-link">
-			             <span class="tabbar-label"> DOWNLOADS
-			            	<i class="fa fa-download"></i>
-			            </span>
+			        <a href="#tab6" class="tab-link">
+			             <span class="tabbar-label">CONTACTS</span>
 			        </a>
 			    </div>
 			</div>
@@ -31,31 +32,9 @@
 		      <!-- Tabs, tabs wrapper -->
 		      <div class="tabs">
 		        <!-- Tab 1, active by default -->
-		        <div id="tab1" class="page-content tab active">
+		        <div id="tab5" class="page-content tab active">
 		        	<!-- Scrollable page content-->
-						<form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
-					    <div class="searchbar-input">
-					      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
-					    </div><a href="#" class="searchbar-cancel">Cancel</a>
-					  </form>
-					 
-					  <!-- Search Bar overlay -->
-					  <div class="searchbar-overlay"></div>
-				  	<!-- This block will be displayed if nothing found -->
-				    <div class="content-block searchbar-not-found">
-				      <div class="content-block-inner">Nothing found</div>
-				    </div>	 
-				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
-				    <div class="list-block list-block-search searchbar-found media-list">
-					  <ul class="event-items" id="icpak_publications">
-					     
-					  </ul>
-					</div>
-		        </div>
-		        <!-- Tab 2 -->
-		        <div id="tab2" class="page-content tab">
-		        	<!-- Scrollable page content-->
-					<form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
 				    <div class="searchbar-input">
 				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
 				    </div><a href="#" class="searchbar-cancel">Cancel</a>
@@ -63,13 +42,60 @@
 				 
 				  <!-- Search Bar overlay -->
 				  <div class="searchbar-overlay"></div>
-		          	<div class="content-block searchbar-not-found">
+				  	<!-- This block will be displayed if nothing found -->
+				    <div class="content-block searchbar-not-found">
 				      <div class="content-block-inner">Nothing found</div>
 				    </div>	 
 				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
 				    <div class="list-block list-block-search searchbar-found media-list">
-					  <ul class="resources-items" id="icpak_resources_two">
-					   
+					  <ul class="event-items" id="inbox">
+                        
+					  </ul>
+					</div>
+					
+		        </div>
+		        <!-- Tab 1, active by default -->
+		        <div id="tab7" class="page-content tab">
+                	<a href="#" data-popup=".popup-add-discussion" class="open-popup button active"><i class="fa fa-plus"></i> New Discussion</a>
+		        	<!-- Scrollable page content-->
+				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+				    <div class="searchbar-input">
+				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+				    </div><a href="#" class="searchbar-cancel">Cancel</a>
+				  </form>
+				 
+				  <!-- Search Bar overlay -->
+				  <div class="searchbar-overlay"></div>
+				  	<!-- This block will be displayed if nothing found -->
+				    <div class="content-block searchbar-not-found">
+				      <div class="content-block-inner">Nothing found</div>
+				    </div>	 
+				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+				    <div class="list-block list-block-search searchbar-found media-list">
+					  <ul class="event-items" id="all_forums">
+                        
+					  </ul>
+					</div>
+		        </div>
+		        <!-- Tab 2 -->
+		        <div id="tab6" class="page-content tab">
+		          		<!-- Scrollable page content-->
+				  <form data-search-list=".list-block-search" data-search-in=".item-title" class="searchbar searchbar-init">
+				    <div class="searchbar-input">
+				      <input type="search" placeholder="Search"><a href="#" class="searchbar-clear"></a>
+				    </div><a href="#" class="searchbar-cancel">Cancel</a>
+				  </form>
+				 
+				  <!-- Search Bar overlay -->
+				  <div class="searchbar-overlay"></div>
+				  	<!-- This block will be displayed if nothing found -->
+				    <div class="content-block searchbar-not-found">
+				      <div class="content-block-inner">Nothing found</div>
+				    </div>	 
+				    <!-- This block will be displayed if anything found, and this list block is used a searbar target -->
+				    <div class="list-block list-block-search searchbar-found media-list">
+					  <ul class="event-items" id="contacts">
+					    
 					  </ul>
 					</div>
 		        </div>
@@ -77,16 +103,19 @@
 		      </div>
 		    </div>
 		</div>
-
+		  <a href="#" class="floating-button color-pink">
+					    <i class="fa fa-plus"></i>
+					  </a>
+		<!-- end of page content -->
 		<div class="toolbar tabbar tabbar-labels" id="bottom">
             <div class="toolbar-inner">
-                <a class="button " href="events.html" id="events-button" onclick="get_event_items();">
+                <a class="button " href="events.html" id="events-button" >
                     <i class="fa fa-calendar">
                       <!-- <span class="badge bg-red">0</span> -->
                     </i>
                     <span class="tabbar-label">EVENTS</span>
                 </a>
-                <a href="resources.html" class="button active" id="resources-button">
+                <a href="resources.html" class="button " id="resources-button">
                     <i class="fa fa-download">
                         <span class="badge bg-red" > <span id="num_publication">0</span></span>
                     </i>
@@ -98,7 +127,7 @@
                     </i>
                     <span class="tabbar-label">ICPAK TV</span>
                 </a>
-                <a href="chat.html" class="button" id="chat-button">
+                <a href="chat.html" class="button active" id="chat-button">
                     <i class="fa fa-comment-o">
                       <span class="badge bg-red"><span id="num_chats">0</span></span>
                     </i>
@@ -110,5 +139,6 @@
                 </a>
             </div>
         </div>
+		 
 	</div>
 </div>

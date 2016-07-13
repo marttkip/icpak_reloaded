@@ -46,25 +46,23 @@ function get_event_items()
 
 	//get client's credentials
 	myApp.showIndicator();
-	setTimeout(function () {
-		service.getEvents().done(function (employees) {
-			var data = jQuery.parseJSON(employees);
-			
-			if(data.message == "success")
-			{
-				$( "#event_list" ).html( data.result );
-				window.localStorage.setItem("event_list",data.result);
-			}
-			
-			else
-			{
-				var event_list = window.localStorage.getItem("event_list");
-				$( "#event_list" ).html( event_list );
-			}
-			
-		});	
-		myApp.hideIndicator();
-	}, 2000);
+	service.getEvents().done(function (employees) {
+		var data = jQuery.parseJSON(employees);
+		
+		if(data.message == "success")
+		{
+			$( "#event_list" ).html( data.result );
+			window.localStorage.setItem("event_list",data.result);
+		}
+		
+		else
+		{
+			var event_list = window.localStorage.getItem("event_list");
+			$( "#event_list" ).html( event_list );
+		}
+		
+	});	
+	myApp.hideIndicator();
 }
 
 function get_events_description(id)
