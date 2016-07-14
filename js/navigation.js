@@ -56,9 +56,10 @@ $$(document).on('pageInit', '.page[data-page="member-profile"]', function (e)
 	window.localStorage.setItem("view_page",2);
 	
 	mainView.showNavbar();
-	var member_no = window.localStorage.getItem("member_no");
-		
-	if(member_no != null )
+	//window.localStorage.setItem("logged_in", 'no');
+	var logged_in = window.localStorage.getItem("logged_in");
+	//alert(logged_in);
+	if(logged_in == 'yes')
 	{
 		$( "#black-login" ).addClass( "cached" );
 		$( "#resources-button" ).removeClass( "active" );
@@ -73,8 +74,8 @@ $$(document).on('pageInit', '.page[data-page="member-profile"]', function (e)
 	}
 	else
 	{
-		$( "#black-login" ).removeClass( "cached" );
-		mainView.router.loadPage('login.html');
+		myApp.hideIndicator();
+		myApp.modalLogin('Please log in to join the forum', 'Login', login_member);
 	}
 })
 

@@ -122,8 +122,8 @@ $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e)
 	
 	else
 	{
-		
-		mainView.router.loadPage('login.html');
+		myApp.hideIndicator();
+		myApp.modalLogin('Please log in to join the forum', 'Login', login_member);
 	}
 	myApp.hideIndicator();
 })

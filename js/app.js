@@ -17,6 +17,11 @@ var Login_service = function() {
 		var request = url + "login/login_member";
         return $.ajax({url: request, data: form_data, type: 'POST', processData: false,contentType: false});
     }
+	
+    this.login_member2 = function(username, password) {
+		var request = url + "login/login_member";
+		return $.ajax({url: request, data: {member_no: username, password: password}, type: 'POST'});
+    }
     this.edit_member_contact = function(form_data) {
 		var request = url + "login/edit_member_contact";
         return $.ajax({url: request, data: form_data, type: 'POST', processData: false,contentType: false});
@@ -276,6 +281,89 @@ $(document).on("submit","form#login_member",function(e)
     }
     return false;
 });
+
+function login_member(username, password)
+{
+	if(username != '')
+	{
+		if(password != '')
+		{
+			//check if there is a network connection
+			var connection = true;//is_connected();
+			
+			if(connection === true)
+			{
+				var service = new Login_service();
+				service.initialize().done(function () {
+					console.log("Service initialized");
+				});
+				service.login_member2(username, password).done(function (employees) {
+						var data = jQuery.parseJSON(employees);
+						
+						if(data.message == "success")
+						{
+							window.localStorage.setItem("member_no", data['result']['member_id']);
+							// window.localStorage.setItem("member_no", data['result']['member_no']);
+							window.localStorage.setItem("member_id", data['result']['member_id']);
+							window.localStorage.setItem("logged_in", 'yes');
+							window.localStorage.setItem("member_email", data['result']['member_email']);
+							window.localStorage.setItem("member_first_name", data['result']['member_first_name']);
+							window.localStorage.setItem("memberRefId", data['result']['memberRefId']);
+							window.localStorage.setItem("applicationRefId", data['result']['applicationRefId']);
+							window.localStorage.setItem("member_code", data['result']['member_code']);
+							
+							var member_first_name = window.localStorage.getItem('member_first_name');
+		
+							myApp.alert('Welcome back '+member_first_name+' Press OK to proceed');
+							// location.reload()
+							/*mainView.showNavbar();
+							mainView.router.loadPage('profile.html');
+							mainView.showNavbar();*/
+							
+							myApp.showIndicator();
+							
+							// mainView.router.back();
+							var view_page = window.localStorage.getItem("view_page");
+							if(view_page == 1)
+							{
+							  mainView.router.loadPage('chat.html');  
+							}
+							else
+							{
+								mainView.router.loadPage('profile.html');  
+							}
+		
+						}
+						else
+						{
+							 window.localStorage.setItem("logged_in", 'no');
+							 myApp.alert(''+data.result+' Press OK to proceed');
+						}
+					});
+			}
+			
+			else
+			{
+				myApp.alert('No internet connection - please check your internet connection then try again');
+				myApp.modalLogin('Please log in to join the forum', 'Login', login_member);
+			}
+		}
+		
+		else
+		{
+			myApp.alert('Please enter your password to login', 'Error');	
+			myApp.modalLogin('Please log in to join the forum', 'Login', login_member);
+		}
+	}
+	
+		
+	else
+	{
+		myApp.alert('Please enter your username to login', 'Error');
+		myApp.modalLogin('Please log in to join the forum', 'Login', login_member);	
+	}
+}
+
 function reload_forums()
 {
     var view_page = window.localStorage.getItem("view_page");
