@@ -53,7 +53,7 @@ var MessagesService = function() {
 $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e) 
 {
 	window.localStorage.setItem("view_page",1);
-	var mainView = myApp.addView('.view-main');
+	
 	mainView.showNavbar();
 
 	$( "#black-login" ).addClass( "cached" );
@@ -122,7 +122,7 @@ $(document).on('pageInit', '.page[data-page="icpak-chat"]', function (e)
 	
 	else
 	{
-		var mainView = myApp.addView('.view-main');
+		
 		mainView.router.loadPage('login.html');
 	}
 	myApp.hideIndicator();

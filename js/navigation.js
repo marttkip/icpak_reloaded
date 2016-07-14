@@ -1,51 +1,10 @@
-// var myApp = new Framework7();
-var myApp = new Framework7({
-    pushState: true,
-    swipePanel: 'left',
-    swipePanel: 'right',
-    // ... other parameters
-});
-var $$ = Dom7;
-
-
-
-$(document).ready(function(e){
-	var mainView = myApp.addView('.view-main');
-	// mainView.showNavbar();
-	// window.localStorage.clear();
-
-	myApp.showIndicator();
-	setTimeout(function () {
-		myApp.hideIndicator();
-		
-		var logged_in = window.localStorage.getItem("logged_in");
-		// var logged_in = 'yes';
-		//if user has logged in
-		if(logged_in == "yes")
-		{
-			
-			mainView.router.loadPage('events.html');
-			
-			// mainView.showToolbar();
-		}
-		
-		//user hasn't logged in. Open login page
-		else
-		{
-			// mainView.router.loadPage('login.html');
-
-			mainView.router.loadPage('events.html');
-		}
-	 }, 3000);
-	
-});
 $$(document).on('pageInit', '.page[data-page="login"]', function (e) 
 {
 	$( "#index-logo" ).addClass( "display_none" );
 })	
 $$(document).on('pageInit', '.page[data-page="icpak-resources"]', function (e) 
 {
-	var mainView = myApp.addView('.view-main');
+	
 	mainView.showNavbar();
 	$( "#resources-button" ).addClass( "active" );
 	$( "#events-button" ).removeClass( "active" );
@@ -63,7 +22,7 @@ $$(document).on('pageInit', '.page[data-page="icpak-resources"]', function (e)
 $$(document).on('pageInit', '.page[data-page="icpak-events"]', function (e) 
 {
 	// alert("sdbajshdajhs");
-	var mainView = myApp.addView('.view-main');
+	
 	mainView.showNavbar();
 	$( "#black-login" ).addClass( "cached" );
 	$( "#resources-button" ).removeClass( "active" );
@@ -79,7 +38,7 @@ $$(document).on('pageInit', '.page[data-page="icpak-events"]', function (e)
 
 $$(document).on('pageInit', '.page[data-page="icpak-live"]', function (e) 
 {
-	var mainView = myApp.addView('.view-main');
+	
 	mainView.showNavbar();
 	$( "#black-login" ).addClass( "cached" );
 	$( "#resources-button" ).removeClass( "active" );
@@ -95,7 +54,7 @@ $$(document).on('pageInit', '.page[data-page="icpak-live"]', function (e)
 $$(document).on('pageInit', '.page[data-page="member-profile"]', function (e) 
 {
 	window.localStorage.setItem("view_page",2);
-	var mainView = myApp.addView('.view-main');
+	
 	mainView.showNavbar();
 	var member_no = window.localStorage.getItem("member_no");
 		

@@ -118,11 +118,8 @@ function onDeviceReady()
     document.addEventListener("backbutton", onBackKeyDown, false);
 }
 
-document.addEventListener("backbutton", onBackKeyDown, false);
-
 function onBackKeyDown() {
     // Handle the back button
-    var mainView = myApp.addView('.view-main');
     mainView.router.back();
     mainView.router.refreshPage();
 }
@@ -132,25 +129,29 @@ function onMenuKeyDown() {
     alert('menu button');
 }
 
-$(document).ready(function(){
+$(document).ready(function()
+{
+	myApp.showIndicator();
+		
+	var logged_in = window.localStorage.getItem("logged_in");
+	// var logged_in = 'yes';
+	//if user has logged in
+	if(logged_in == "yes")
+	{
+		
+		mainView.router.loadPage('events.html');
+		
+		// mainView.showToolbar();
+	}
+	
+	//user hasn't logged in. Open login page
+	else
+	{
+		// mainView.router.loadPage('login.html');
 
-    var member_no = window.localStorage.getItem('member_no');
-   
-    if(member_no != null)   
-    {
-
-        $( "#login_icon" ).html( '<a href="my-profile.html" class="close-popup"><img src="images/icons/white/user.png" alt="" title="" onClick="get_profile_details()"/><span>Profile</span></a>' );
-        $( "#profile_icon" ).html( '<li><a href="my-profile.html" class="close-popup"><img src="images/icons/white/user.png" alt="" title="" onClick="get_profile_details()"/><span>Profile</span></a></li>' );
-
-    }
-    else
-    {
-
-
-    }
-    
-    
-    // automatic_login();
+		mainView.router.loadPage('events.html');
+	}
+	myApp.hideIndicator();
 });
 $(document).on("submit","form#edit_member",function(e)
 {
@@ -200,10 +201,16 @@ $(document).on("submit","form#edit_member",function(e)
 });
 
 //Login member
+$(document).on("click","a",function(e)
+{
+    e.preventDefault();
+	var page_url = $(this).attr('href');
+	mainView.router.loadPage(page_url)
+});
+
+//Login member
 $(document).on("submit","form#login_member",function(e)
 {
-    var mainView = myApp.addView('.view-main');
-
     e.preventDefault();
     //get form values
     var form_data = new FormData(this);
@@ -242,7 +249,6 @@ $(document).on("submit","form#login_member",function(e)
 					
 					myApp.showIndicator();
 					
-					var mainView = myApp.addView('.view-main');
 					// mainView.router.back();
                     var view_page = window.localStorage.getItem("view_page");
                     if(view_page == 1)
